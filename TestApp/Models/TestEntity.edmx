@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestEntity.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TestEntityStoreContainer">
+    <EntitySet Name="Characters" EntityType="TestEntity.Store.Characters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Stats" EntityType="TestEntity.Store.Stats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CharacterStats" EntityType="TestEntity.Store.CharacterStats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Skills" EntityType="TestEntity.Store.Skills" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CharacterSkills" EntityType="TestEntity.Store.CharacterSkills" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Classes" EntityType="TestEntity.Store.Classes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CharacterClasses" EntityType="TestEntity.Store.CharacterClasses" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CharacterStatCharacter" Association="TestEntity.Store.CharacterStatCharacter">
+      <End Role="CharacterStat" EntitySet="CharacterStats" />
+      <End Role="Character" EntitySet="Characters" />
+    </AssociationSet>
+    <AssociationSet Name="CharacterStatStat" Association="TestEntity.Store.CharacterStatStat">
+      <End Role="CharacterStat" EntitySet="CharacterStats" />
+      <End Role="Stat" EntitySet="Stats" />
+    </AssociationSet>
+    <AssociationSet Name="CharacterSkillSkill" Association="TestEntity.Store.CharacterSkillSkill">
+      <End Role="CharacterSkill" EntitySet="CharacterSkills" />
+      <End Role="Skill" EntitySet="Skills" />
+    </AssociationSet>
+    <AssociationSet Name="CharacterSkillCharacter" Association="TestEntity.Store.CharacterSkillCharacter">
+      <End Role="CharacterSkill" EntitySet="CharacterSkills" />
+      <End Role="Character" EntitySet="Characters" />
+    </AssociationSet>
+    <AssociationSet Name="CharacterClassClass" Association="TestEntity.Store.CharacterClassClass">
+      <End Role="CharacterClass" EntitySet="CharacterClasses" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="CharacterClassCharacter" Association="TestEntity.Store.CharacterClassCharacter">
+      <End Role="CharacterClass" EntitySet="CharacterClasses" />
+      <End Role="Character" EntitySet="Characters" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Characters">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlayerName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stats">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CharacterStats">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CharacterID" Type="int" Nullable="false" />
+    <Property Name="StatID" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="Proficient" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Skills">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CharacterSkills">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Proficient" Type="bit" Nullable="false" />
+    <Property Name="SkillID" Type="int" Nullable="false" />
+    <Property Name="CharacterID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Classes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CharacterClasses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClassID" Type="int" Nullable="false" />
+    <Property Name="CharacterID" Type="int" Nullable="false" />
+    <Property Name="Level" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CharacterStatCharacter">
+    <End Role="CharacterStat" Type="TestEntity.Store.CharacterStats" Multiplicity="*" />
+    <End Role="Character" Type="TestEntity.Store.Characters" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Character">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterStat">
+        <PropertyRef Name="CharacterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharacterStatStat">
+    <End Role="CharacterStat" Type="TestEntity.Store.CharacterStats" Multiplicity="*" />
+    <End Role="Stat" Type="TestEntity.Store.Stats" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Stat">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterStat">
+        <PropertyRef Name="StatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharacterSkillSkill">
+    <End Role="CharacterSkill" Type="TestEntity.Store.CharacterSkills" Multiplicity="*" />
+    <End Role="Skill" Type="TestEntity.Store.Skills" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterSkill">
+        <PropertyRef Name="SkillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharacterSkillCharacter">
+    <End Role="CharacterSkill" Type="TestEntity.Store.CharacterSkills" Multiplicity="*" />
+    <End Role="Character" Type="TestEntity.Store.Characters" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Character">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterSkill">
+        <PropertyRef Name="CharacterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharacterClassClass">
+    <End Role="CharacterClass" Type="TestEntity.Store.CharacterClasses" Multiplicity="*" />
+    <End Role="Class" Type="TestEntity.Store.Classes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterClass">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CharacterClassCharacter">
+    <End Role="CharacterClass" Type="TestEntity.Store.CharacterClasses" Multiplicity="*" />
+    <End Role="Character" Type="TestEntity.Store.Characters" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Character">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CharacterClass">
+        <PropertyRef Name="CharacterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TestEntity" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TestEntityContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Characters" EntityType="TestEntity.Character" />
+          <EntitySet Name="Stats" EntityType="TestEntity.Stat" />
+          <EntitySet Name="CharacterStats" EntityType="TestEntity.CharacterStat" />
+          <AssociationSet Name="CharacterStatCharacter" Association="TestEntity.CharacterStatCharacter">
+            <End Role="CharacterStat" EntitySet="CharacterStats" />
+            <End Role="Character" EntitySet="Characters" />
+          </AssociationSet>
+          <AssociationSet Name="CharacterStatStat" Association="TestEntity.CharacterStatStat">
+            <End Role="CharacterStat" EntitySet="CharacterStats" />
+            <End Role="Stat" EntitySet="Stats" />
+          </AssociationSet>
+          <EntitySet Name="Skills" EntityType="TestEntity.Skill" />
+          <EntitySet Name="CharacterSkills" EntityType="TestEntity.CharacterSkill" />
+          <AssociationSet Name="CharacterSkillSkill" Association="TestEntity.CharacterSkillSkill">
+            <End Role="CharacterSkill" EntitySet="CharacterSkills" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="CharacterSkillCharacter" Association="TestEntity.CharacterSkillCharacter">
+            <End Role="CharacterSkill" EntitySet="CharacterSkills" />
+            <End Role="Character" EntitySet="Characters" />
+          </AssociationSet>
+          <EntitySet Name="Classes" EntityType="TestEntity.Class" />
+          <EntitySet Name="CharacterClasses" EntityType="TestEntity.CharacterClass" />
+          <AssociationSet Name="CharacterClassClass" Association="TestEntity.CharacterClassClass">
+            <End Role="CharacterClass" EntitySet="CharacterClasses" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="CharacterClassCharacter" Association="TestEntity.CharacterClassCharacter">
+            <End Role="CharacterClass" EntitySet="CharacterClasses" />
+            <End Role="Character" EntitySet="Characters" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Character">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="PlayerName" Type="String" Nullable="false" />
+          <NavigationProperty Name="CharacterStats" Relationship="TestEntity.CharacterStatCharacter" FromRole="Character" ToRole="CharacterStat" />
+          <NavigationProperty Name="CharacterSkills" Relationship="TestEntity.CharacterSkillCharacter" FromRole="Character" ToRole="CharacterSkill" />
+          <NavigationProperty Name="CharacterClasses" Relationship="TestEntity.CharacterClassCharacter" FromRole="Character" ToRole="CharacterClass" />
+        </EntityType>
+        <EntityType Name="Stat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CharacterStat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CharacterID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stat" Relationship="TestEntity.CharacterStatStat" FromRole="CharacterStat" ToRole="Stat" />
+          <Property Name="StatID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Proficient" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="CharacterStatCharacter">
+          <End Type="TestEntity.CharacterStat" Role="CharacterStat" Multiplicity="*" />
+          <End Type="TestEntity.Character" Role="Character" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterStat">
+              <PropertyRef Name="CharacterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CharacterStatStat">
+          <End Type="TestEntity.CharacterStat" Role="CharacterStat" Multiplicity="*" />
+          <End Type="TestEntity.Stat" Role="Stat" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Stat">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterStat">
+              <PropertyRef Name="StatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CharacterSkill">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Proficient" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="TestEntity.CharacterSkillSkill" FromRole="CharacterSkill" ToRole="Skill" />
+          <Property Name="SkillID" Type="Int32" Nullable="false" />
+          <Property Name="CharacterID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CharacterSkillSkill">
+          <End Type="TestEntity.CharacterSkill" Role="CharacterSkill" Multiplicity="*" />
+          <End Type="TestEntity.Skill" Role="Skill" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterSkill">
+              <PropertyRef Name="SkillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CharacterSkillCharacter">
+          <End Type="TestEntity.CharacterSkill" Role="CharacterSkill" Multiplicity="*" />
+          <End Type="TestEntity.Character" Role="Character" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterSkill">
+              <PropertyRef Name="CharacterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CharacterClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Class" Relationship="TestEntity.CharacterClassClass" FromRole="CharacterClass" ToRole="Class" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="CharacterID" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CharacterClassClass">
+          <End Type="TestEntity.CharacterClass" Role="CharacterClass" Multiplicity="*" />
+          <End Type="TestEntity.Class" Role="Class" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterClass">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CharacterClassCharacter">
+          <End Type="TestEntity.CharacterClass" Role="CharacterClass" Multiplicity="*" />
+          <End Type="TestEntity.Character" Role="Character" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Character">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CharacterClass">
+              <PropertyRef Name="CharacterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestEntityStoreContainer" CdmEntityContainer="TestEntityContainer">
+    <EntitySetMapping Name="Characters">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.Character)">
+        <MappingFragment StoreEntitySet="Characters">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stats">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.Stat)">
+        <MappingFragment StoreEntitySet="Stats">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CharacterStats">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.CharacterStat)">
+        <MappingFragment StoreEntitySet="CharacterStats">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CharacterID" ColumnName="CharacterID" />
+          <ScalarProperty Name="StatID" ColumnName="StatID" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Proficient" ColumnName="Proficient" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skills">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.Skill)">
+        <MappingFragment StoreEntitySet="Skills">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CharacterSkills">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.CharacterSkill)">
+        <MappingFragment StoreEntitySet="CharacterSkills">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Proficient" ColumnName="Proficient" />
+          <ScalarProperty Name="SkillID" ColumnName="SkillID" />
+          <ScalarProperty Name="CharacterID" ColumnName="CharacterID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Classes">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.Class)">
+        <MappingFragment StoreEntitySet="Classes">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CharacterClasses">
+      <EntityTypeMapping TypeName="IsTypeOf(TestEntity.CharacterClass)">
+        <MappingFragment StoreEntitySet="CharacterClasses">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="CharacterID" ColumnName="CharacterID" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
